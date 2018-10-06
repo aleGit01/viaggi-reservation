@@ -1,0 +1,22 @@
+{
+  "type" : "record",
+  "name" : "ReservationEvent",
+  "namespace" : "com.ale.viaggi.reservation.kafka.streams.event",
+  "fields" : [ {
+    "name" : "description",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "eventType",
+    "type" : [ "null", {
+      "type" : "enum",
+      "name" : "ReservationEventType",
+      "symbols" : [ "CREATED", "UPDATED", "DELETED" ]
+    } ]
+  }, {
+    "name" : "reservationId",
+    "type" : [ "null", {
+      "type" : "long",
+      "java-class" : "java.lang.Long"
+    } ]
+  } ]
+}
