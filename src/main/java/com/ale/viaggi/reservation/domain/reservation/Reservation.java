@@ -1,4 +1,4 @@
-package com.ale.viaggi.reservation.domain;
+package com.ale.viaggi.reservation.domain.reservation;
 
 public class Reservation {
 
