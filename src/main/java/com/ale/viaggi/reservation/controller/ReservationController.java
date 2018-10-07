@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ale.viaggi.reservation.dto.Reservation;
+import com.ale.viaggi.reservation.domain.Reservation;
 import com.ale.viaggi.reservation.service.ReservationService;
 
 @RestController

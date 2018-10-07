@@ -18,7 +18,7 @@ import com.ale.viaggi.reservation.avro.generated.event.ReservationEvent;
 import com.ale.viaggi.reservation.avro.generated.event.ReservationEventType;
 import com.ale.viaggi.reservation.avro.schema.Schemas;
 import com.ale.viaggi.reservation.dao.reservation.ReservationDAO;
-import com.ale.viaggi.reservation.dto.Reservation;
+import com.ale.viaggi.reservation.domain.Reservation;
 import com.ale.viaggi.reservation.exception.ResourceNotFoundException;
 import com.ale.viaggi.reservation.kafka.KafkaConstants;
 import com.ale.viaggi.reservation.kafka.util.MicroserviceUtils;
