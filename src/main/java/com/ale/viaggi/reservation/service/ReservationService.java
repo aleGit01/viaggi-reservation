@@ -61,6 +61,20 @@ public class ReservationService implements ServiceStream {
 		return reservation;
 	}
 
+	// Get a Single Reservation
+	public Reservation getReservationByReservationNumber(Long reservationNumber) {
+		com.ale.viaggi.reservation.entity.Reservation reservationEntity = reservationRepository
+				.findByReservationNumber(reservationNumber)//
+				.orElseThrow(
+						() -> new ResourceNotFoundException("Reservation", "reservationNumber", reservationNumber));
+
+		// entity to dto
+		ModelMapper modelMapper = new ModelMapper();
+		Reservation reservation = modelMapper.map(reservationEntity, Reservation.class);
+
+		return reservation;
+	}
+
 	// Update a Reservation
 	public Reservation updateReservation(Long reservationId, Reservation reservationDetails) {
 

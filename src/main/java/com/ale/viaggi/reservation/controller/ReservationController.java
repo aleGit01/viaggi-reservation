@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,8 @@ import com.ale.viaggi.reservation.service.ReservationService;
 
 @RestController
 @RequestMapping("/reservation")
+@CrossOrigin(origins = "http://localhost:4200") // Needed for Angular!!!! Configure CORS for Spring Boot
+												// https://dzone.com/articles/bootiful-development-with-spring-boot-and-angular
 public class ReservationController {
 
 	@Autowired
@@ -31,9 +34,17 @@ public class ReservationController {
 	}
 
 	// Get a Single Reservation
-	@GetMapping("/reservations/{id}")
-	public Reservation getReservationById(@PathVariable(value = "id") Long reservationId) {
-		return reservationService.getReservationById(reservationId);
+	// @GetMapping("/reservations/{id}")
+	// public Reservation getReservationById(@PathVariable(value = "id") Long
+	// reservationId) {
+	// return reservationService.getReservationById(reservationId);
+	// }
+
+	// Get a Single Reservation
+	@GetMapping("/reservations/{reservationNumber}")
+	public Reservation getReservationByReservationNumber(
+			@PathVariable(value = "reservationNumber") Long reservationNumber) {
+		return reservationService.getReservationByReservationNumber(reservationNumber);
 	}
 
 	// Update a Reservation
