@@ -12,7 +12,7 @@ import com.ale.viaggi.reservation.entity.item.Item;
 @Entity
 @Table(name = "accomodation")
 @EntityListeners(AuditingEntityListener.class)
-public class Accomodation extends Item {
+public class AccomodationEntity extends Item {
 
 	@Column
 	private String descrAccomodation;
