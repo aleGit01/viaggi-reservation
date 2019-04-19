@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ale.viaggi.reservation.avro.generated.event.ReservationEvent;
+import com.ale.viaggi.event.avro.reservation.ReservationEvent;
 import com.ale.viaggi.reservation.avro.schema.Schemas;
 import com.ale.viaggi.reservation.kafka.KafkaConstants;
 import com.ale.viaggi.reservation.kafka.util.MicroserviceUtils;

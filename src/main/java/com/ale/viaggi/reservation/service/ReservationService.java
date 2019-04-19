@@ -14,8 +14,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ale.viaggi.reservation.avro.generated.event.ReservationEvent;
-import com.ale.viaggi.reservation.avro.generated.event.ReservationEventType;
+import com.ale.viaggi.event.avro.reservation.ReservationEvent;
+import com.ale.viaggi.event.avro.reservation.ReservationEventType;
 import com.ale.viaggi.reservation.avro.schema.Schemas;
 import com.ale.viaggi.reservation.dao.reservation.ReservationDAO;
 import com.ale.viaggi.reservation.domain.reservation.Reservation;

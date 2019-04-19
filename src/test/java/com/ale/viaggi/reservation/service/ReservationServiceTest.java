@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ale.viaggi.reservation.avro.generated.event.ReservationEvent;
-import com.ale.viaggi.reservation.avro.generated.event.ReservationEventType;
+import com.ale.viaggi.event.avro.reservation.ReservationEvent;
+import com.ale.viaggi.event.avro.reservation.ReservationEventType;
 import com.ale.viaggi.reservation.avro.schema.Schemas;
 import com.ale.viaggi.reservation.avro.schema.Schemas.Topics;
 import com.ale.viaggi.reservation.test.util.MicroserviceTestUtils;

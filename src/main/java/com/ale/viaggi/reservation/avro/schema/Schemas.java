@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 
-import com.ale.viaggi.reservation.avro.generated.event.ReservationEvent;
+import com.ale.viaggi.event.avro.reservation.ReservationEvent;
 
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 
@@ -76,8 +76,7 @@ public class Schemas {
 
 		private static void createTopics() {
 
-			RESERVATION_EVENT = new Topic<>("reservation", Serdes.String(),
-					new SpecificAvroSerde<ReservationEvent>());
+			RESERVATION_EVENT = new Topic<>("reservation", Serdes.String(), new SpecificAvroSerde<ReservationEvent>());
 
 		}
 	}
