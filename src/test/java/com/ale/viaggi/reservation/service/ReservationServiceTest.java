@@ -13,8 +13,8 @@ import org.junit.Test;
 
 import com.ale.viaggi.event.avro.reservation.ReservationEvent;
 import com.ale.viaggi.event.avro.reservation.ReservationEventType;
-import com.ale.viaggi.reservation.avro.schema.Schemas;
-import com.ale.viaggi.reservation.avro.schema.Schemas.Topics;
+import com.ale.viaggi.kafka.schemas.Schemas;
+import com.ale.viaggi.kafka.schemas.Schemas.Topics;
 import com.ale.viaggi.reservation.test.util.MicroserviceTestUtils;
 
 public class ReservationServiceTest extends MicroserviceTestUtils {

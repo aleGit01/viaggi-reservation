@@ -1,6 +1,6 @@
 package com.ale.viaggi.reservation.service;
 
-import static com.ale.viaggi.reservation.avro.schema.Schemas.Topics.RESERVATION_EVENT;
+import static com.ale.viaggi.kafka.schemas.Schemas.Topics.RESERVATION_EVENT;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 
 import com.ale.viaggi.event.avro.reservation.ReservationEvent;
 import com.ale.viaggi.event.avro.reservation.ReservationEventType;
-import com.ale.viaggi.reservation.avro.schema.Schemas;
+import com.ale.viaggi.kafka.KafkaConstants;
+import com.ale.viaggi.kafka.schemas.Schemas;
+import com.ale.viaggi.kafka.util.MicroserviceUtils;
 import com.ale.viaggi.reservation.dao.reservation.ReservationDAO;
 import com.ale.viaggi.reservation.domain.reservation.Reservation;
 import com.ale.viaggi.reservation.exception.ResourceNotFoundException;
-import com.ale.viaggi.reservation.kafka.KafkaConstants;
-import com.ale.viaggi.reservation.kafka.util.MicroserviceUtils;
 
 @Service
 public class ReservationService implements ServiceStream {

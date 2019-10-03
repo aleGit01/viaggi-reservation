@@ -25,8 +25,8 @@ import org.junit.ClassRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ale.viaggi.reservation.avro.schema.Schemas;
-import com.ale.viaggi.reservation.avro.schema.Schemas.Topic;
+import com.ale.viaggi.kafka.schemas.Schemas;
+import com.ale.viaggi.kafka.schemas.Schemas.Topic;
 import com.ale.viaggi.reservation.test.embedded.kafka.EmbeddedSingleNodeKafkaCluster;
 
 import io.confluent.kafka.schemaregistry.rest.SchemaRegistryConfig;
