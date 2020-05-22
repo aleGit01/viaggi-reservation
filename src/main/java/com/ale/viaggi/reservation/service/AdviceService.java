@@ -6,10 +6,9 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.slf4j.Logger;
@@ -26,7 +25,6 @@ public class AdviceService implements ServiceStream {
 
 	private static final Logger log = LoggerFactory.getLogger(AdviceService.class);
 	private KafkaStreams streams;
-	private KafkaConsumer<String, ReservationEvent> consumer;
 
 	@PostConstruct
 	public void runStream() {
@@ -59,7 +57,7 @@ public class AdviceService implements ServiceStream {
 		reservations.foreach((k, v) -> test(k, v));
 
 		Properties props = MicroserviceUtils.baseStreamsConfig(bootstrapServers, "viaggi-reservation");
-		props.setProperty(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, "0");
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "viaggi-reservation");
 
 		return new KafkaStreams(builder.build(), props);
 	}
@@ -75,7 +73,6 @@ public class AdviceService implements ServiceStream {
 		if (streams != null) {
 			streams.close();
 		}
-
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,24 +35,29 @@ public class ReservationController {
 	}
 
 	// Get a Single Reservation
-	// @GetMapping("/reservations/{id}")
-	// public Reservation getReservationById(@PathVariable(value = "id") Long
-	// reservationId) {
-	// return reservationService.getReservationById(reservationId);
-	// }
+	@GetMapping("/reservations/{id}")
+	public Reservation getReservationById(@PathVariable(value = "id") Long reservationId) {
+		return reservationService.getReservationById(reservationId);
+	}
 
 	// Get a Single Reservation
-	@GetMapping("/reservations/{reservationNumber}")
-	public Reservation getReservationByReservationNumber(
-			@PathVariable(value = "reservationNumber") Long reservationNumber) {
-		return reservationService.getReservationByReservationNumber(reservationNumber);
-	}
+//	@GetMapping("/reservations/{reservationNumber}")
+//	public Reservation getReservationByReservationNumber(
+//			@PathVariable(value = "reservationNumber") Long reservationNumber) {
+//		return reservationService.getReservationByReservationNumber(reservationNumber);
+//	}
 
 	// Update a Reservation
 	@PutMapping("/reservations/{id}")
 	public Reservation updateReservation(@PathVariable(value = "id") Long reservationId,
 			@Valid @RequestBody Reservation reservationDetails) {
 		return reservationService.updateReservation(reservationId, reservationDetails);
+	}
+
+	// Create a Reservation
+	@PostMapping("/reservations")
+	public Reservation createReservation(@Valid @RequestBody Reservation reservation) {
+		return reservationService.createReservation(reservation);
 	}
 
 	// Delete a Reservation

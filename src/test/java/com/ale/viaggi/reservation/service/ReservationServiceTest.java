@@ -56,7 +56,7 @@ public class ReservationServiceTest extends MicroserviceTestUtils {
 		KeyValue<String, ReservationEvent> record = new KeyValue<>(String.valueOf(reservation.getReservationId()),
 				reservation);
 
-		// Simulate the order being validated
+
 		send(Topics.RESERVATION_EVENT, record);
 
 		// MicroserviceTestUtils.read(Topics.RESERVATION, 2,

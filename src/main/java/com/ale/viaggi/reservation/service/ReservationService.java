@@ -4,7 +4,9 @@ import static com.ale.viaggi.kafka.schemas.Schemas.Topics.BOOKING_EVENT;
 import static com.ale.viaggi.kafka.schemas.Schemas.Topics.RESERVATION_EVENT;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
@@ -30,6 +32,7 @@ import com.ale.viaggi.kafka.schemas.Schemas;
 import com.ale.viaggi.kafka.util.MicroserviceUtils;
 import com.ale.viaggi.reservation.dao.reservation.ReservationDAO;
 import com.ale.viaggi.reservation.domain.reservation.Reservation;
+import com.ale.viaggi.reservation.entity.ReservationEntity;
 import com.ale.viaggi.reservation.exception.ResourceNotFoundException;
 
 @Service
@@ -49,7 +52,7 @@ public class ReservationService implements ServiceStream {
 	}
 
 	public List<Reservation> getAllReservations() {
-		List<com.ale.viaggi.reservation.entity.Reservation> reservationEntities = reservationRepository.findAll();
+		List<com.ale.viaggi.reservation.entity.ReservationEntity> reservationEntities = reservationRepository.findAll();
 
 		ModelMapper modelMapper = new ModelMapper();
 		java.lang.reflect.Type targetListType = new TypeToken<List<Reservation>>() {
@@ -61,7 +64,7 @@ public class ReservationService implements ServiceStream {
 
 	// Get a Single Reservation
 	public Reservation getReservationById(Long reservationId) {
-		com.ale.viaggi.reservation.entity.Reservation reservationEntity = reservationRepository.findById(reservationId)
+		com.ale.viaggi.reservation.entity.ReservationEntity reservationEntity = reservationRepository.findById(reservationId)
 				.orElseThrow(() -> new ResourceNotFoundException("Reservation", "id", reservationId));
 
 		// entity to dto
@@ -73,7 +76,7 @@ public class ReservationService implements ServiceStream {
 
 	// Get a Single Reservation
 	public Reservation getReservationByReservationNumber(Long reservationNumber) {
-		com.ale.viaggi.reservation.entity.Reservation reservationEntity = reservationRepository
+		ReservationEntity reservationEntity = reservationRepository
 				.findByReservationNumber(reservationNumber)//
 				.orElseThrow(
 						() -> new ResourceNotFoundException("Reservation", "reservationNumber", reservationNumber));
@@ -85,17 +88,62 @@ public class ReservationService implements ServiceStream {
 		return reservation;
 	}
 
-	// Update a Reservation
+
+
+	public Reservation createReservation(Reservation reservation) {			
+		ReservationEntity reservationEntity = new ReservationEntity();
+
+		reservationEntity.setReservationNumber(generadeReservationNumber());
+
+		// dto to entity
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.map(reservation, reservationEntity);
+
+		reservationEntity = reservationRepository.save(reservationEntity);
+
+		ReservationEvent reservationEvent = fromEntity(reservationEntity, ReservationEventType.CREATED);
+		sendEvent(reservationEvent);
+
+		// entity to dto
+		modelMapper.map(reservationEntity, reservation);
+
+		return reservation;
+	}
+
+
+	// TODO: this is just a dummy implementation... do a better generation
+	private Long generadeReservationNumber() {
+		Long reservationNumber = null;
+		int maxTimesWhile = 100;
+
+		int countWhile = 0;
+		while(reservationNumber == null && countWhile < maxTimesWhile) {
+
+			Long generatedLong = new Random().nextLong();
+			Optional<ReservationEntity> reservationEntity = reservationRepository
+					.findByReservationNumber(generatedLong);
+
+			if(!reservationEntity.isPresent()) {
+				reservationNumber = generatedLong;
+			}
+
+			countWhile++;
+		}
+
+		return reservationNumber;
+	}
+
 	public Reservation updateReservation(Long reservationId, Reservation reservationDetails) {
 
-		com.ale.viaggi.reservation.entity.Reservation reservationEntity = reservationRepository.findById(reservationId)
+		ReservationEntity reservationEntity = reservationRepository.findById(reservationId)
 				.orElseThrow(() -> new ResourceNotFoundException("Reservation", "id", reservationId));
 
 		reservationEntity.setDescription(reservationDetails.getDescription());
 
 		reservationEntity = reservationRepository.save(reservationEntity);
 
-		sendEvent(reservationEntity);
+		ReservationEvent reservatioEvent = fromEntity(reservationEntity, ReservationEventType.UPDATED);
+		sendEvent(reservatioEvent);
 
 		Reservation reservation = new Reservation();
 
@@ -106,8 +154,7 @@ public class ReservationService implements ServiceStream {
 		return reservation;
 	}
 
-	private void sendEvent(com.ale.viaggi.reservation.entity.Reservation reservationEntity) {
-		ReservationEvent reservatioEvent = fromEntity(reservationEntity);
+	private void sendEvent(ReservationEvent reservatioEvent) {
 
 		// Keys are mostly useful/necessary if you require strong order for a key and
 		// are developing something like a state machine. If you require that messages
@@ -126,10 +173,9 @@ public class ReservationService implements ServiceStream {
 		producer.send(producerRecord);
 	}
 
-	private ReservationEvent fromEntity(com.ale.viaggi.reservation.entity.Reservation reservationEntity) {
+	private ReservationEvent fromEntity(com.ale.viaggi.reservation.entity.ReservationEntity reservationEntity, ReservationEventType eventType) {
 		ReservationEvent reservationEvent = new ReservationEvent();
-
-		reservationEvent.setEventType(ReservationEventType.UPDATED);
+		reservationEvent.setEventType(eventType);
 		reservationEvent.setDescription(reservationEntity.getDescription());
 		reservationEvent.setReservationId(reservationEntity.getReservationNumber());
 
@@ -138,7 +184,7 @@ public class ReservationService implements ServiceStream {
 
 	// Delete a Reservation
 	public void deleteReservation(Long reservationId) {
-		com.ale.viaggi.reservation.entity.Reservation reservationEntity = reservationRepository.findById(reservationId)
+		com.ale.viaggi.reservation.entity.ReservationEntity reservationEntity = reservationRepository.findById(reservationId)
 				.orElseThrow(() -> new ResourceNotFoundException("Reservation", "id", reservationId));
 
 		reservationRepository.delete(reservationEntity);

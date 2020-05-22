@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "reservation")
 @EntityListeners(AuditingEntityListener.class)
-public class Reservation implements Serializable{
+public class ReservationEntity implements Serializable{
 	
 	private static final long serialVersionUID = -7421638592356762529L;
 	

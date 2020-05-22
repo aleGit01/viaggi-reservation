@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ale.viaggi.reservation.entity.Reservation;
+import com.ale.viaggi.reservation.entity.ReservationEntity;
 
 @Repository
-public interface ReservationDAO extends JpaRepository<Reservation, Long> {
+public interface ReservationDAO extends JpaRepository<ReservationEntity, Long> {
 
-	Optional<Reservation> findByReservationNumber(Long reservationNumber);
+	Optional<ReservationEntity> findByReservationNumber(Long reservationNumber);
 
 }
