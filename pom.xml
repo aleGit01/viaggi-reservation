@@ -23,7 +23,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<confluent.version>5.0.0</confluent.version>
+		<confluent.version>5.5.0</confluent.version>
 		<kafka.version>2.0.0</kafka.version>
 		<kafka.scala.version>2.12</kafka.scala.version> 
 		<scalatest.version>3.2.0-SNAP10</scalatest.version> 
